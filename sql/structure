@@ -1,0 +1,3911 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Aug 19, 2024 at 12:26 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `opencart`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}address`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}address` (
+  `address_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `company` varchar(60) NOT NULL,
+  `address_1` varchar(128) NOT NULL,
+  `address_2` varchar(128) NOT NULL,
+  `city` varchar(128) NOT NULL,
+  `postcode` varchar(10) NOT NULL,
+  `country_id` int(11) NOT NULL DEFAULT 0,
+  `zone_id` int(11) NOT NULL DEFAULT 0,
+  `custom_field` text NOT NULL,
+  `default` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}address_format`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}address_format` (
+  `address_format_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `address_format` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}antispam`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}antispam` (
+  `antispam_id` int(11) NOT NULL,
+  `keyword` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}api`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}api` (
+  `api_id` int(11) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `key` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}api_ip`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}api_ip` (
+  `api_ip_id` int(11) NOT NULL,
+  `api_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}api_session`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}api_session` (
+  `api_session_id` int(11) NOT NULL,
+  `api_id` int(11) NOT NULL,
+  `session_id` varchar(32) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}article`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}article` (
+  `article_id` int(11) NOT NULL,
+  `topic_id` int(11) NOT NULL,
+  `author` varchar(64) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}article_comment`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}article_comment` (
+  `article_comment_id` int(11) NOT NULL,
+  `article_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}article_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}article_description` (
+  `article_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `tag` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}article_to_layout`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}article_to_layout` (
+  `article_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}article_to_store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}article_to_store` (
+  `article_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}attribute`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}attribute` (
+  `attribute_id` int(11) NOT NULL,
+  `attribute_group_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}attribute_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}attribute_description` (
+  `attribute_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}attribute_group`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}attribute_group` (
+  `attribute_group_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}attribute_group_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}attribute_group_description` (
+  `attribute_group_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}banner`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}banner` (
+  `banner_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}banner_image`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}banner_image` (
+  `banner_image_id` int(11) NOT NULL,
+  `banner_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}cart`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}cart` (
+  `cart_id` int(11) NOT NULL,
+  `api_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `session_id` varchar(32) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `subscription_plan_id` int(11) NOT NULL,
+  `option` text NOT NULL,
+  `quantity` int(5) NOT NULL,
+  `override` tinyint(1) NOT NULL,
+  `price` decimal(15,4) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}category`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}category` (
+  `category_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT 0,
+  `top` tinyint(1) NOT NULL,
+  `column` int(3) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}category_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}category_description` (
+  `category_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}category_filter`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}category_filter` (
+  `category_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}category_path`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}category_path` (
+  `category_id` int(11) NOT NULL,
+  `path_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}category_to_layout`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}category_to_layout` (
+  `category_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}category_to_store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}category_to_store` (
+  `category_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}country`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}country` (
+  `country_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `iso_code_2` varchar(2) NOT NULL,
+  `iso_code_3` varchar(3) NOT NULL,
+  `address_format_id` int(11) NOT NULL,
+  `postcode_required` tinyint(1) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}coupon`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}coupon` (
+  `coupon_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `type` char(1) NOT NULL,
+  `discount` decimal(15,4) NOT NULL,
+  `logged` tinyint(1) NOT NULL,
+  `shipping` tinyint(1) NOT NULL,
+  `total` decimal(15,4) NOT NULL,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL,
+  `uses_total` int(11) NOT NULL,
+  `uses_customer` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}coupon_category`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}coupon_category` (
+  `coupon_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}coupon_history`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}coupon_history` (
+  `coupon_history_id` int(11) NOT NULL,
+  `coupon_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}coupon_product`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}coupon_product` (
+  `coupon_product_id` int(11) NOT NULL,
+  `coupon_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}cron`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}cron` (
+  `cron_id` int(11) NOT NULL,
+  `code` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `cycle` varchar(12) NOT NULL,
+  `action` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}currency`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}currency` (
+  `currency_id` int(11) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `code` varchar(3) NOT NULL,
+  `symbol_left` varchar(12) NOT NULL,
+  `symbol_right` varchar(12) NOT NULL,
+  `decimal_place` int(1) NOT NULL,
+  `value` double(15,8) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer` (
+  `customer_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0,
+  `language_id` int(11) NOT NULL,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(96) NOT NULL,
+  `telephone` varchar(32) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `custom_field` text NOT NULL,
+  `newsletter` tinyint(1) NOT NULL DEFAULT 0,
+  `ip` varchar(40) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `safe` tinyint(1) NOT NULL,
+  `token` text NOT NULL,
+  `code` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_activity`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_activity` (
+  `customer_activity_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `key` varchar(64) NOT NULL,
+  `data` text NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_affiliate`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_affiliate` (
+  `customer_id` int(11) NOT NULL,
+  `company` varchar(60) NOT NULL,
+  `website` varchar(255) NOT NULL,
+  `tracking` varchar(64) NOT NULL,
+  `balance` decimal(15,4) NOT NULL,
+  `commission` decimal(4,2) NOT NULL DEFAULT 0.00,
+  `tax` varchar(64) NOT NULL,
+  `payment_method` varchar(6) NOT NULL,
+  `cheque` varchar(100) NOT NULL,
+  `paypal` varchar(64) NOT NULL,
+  `bank_name` varchar(64) NOT NULL,
+  `bank_branch_number` varchar(64) NOT NULL,
+  `bank_swift_code` varchar(64) NOT NULL,
+  `bank_account_name` varchar(64) NOT NULL,
+  `bank_account_number` varchar(64) NOT NULL,
+  `custom_field` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_affiliate_report`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_affiliate_report` (
+  `customer_affiliate_report_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_approval`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_approval` (
+  `customer_approval_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `type` varchar(9) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_group`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_group` (
+  `customer_group_id` int(11) NOT NULL,
+  `approval` int(1) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_group_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_group_description` (
+  `customer_group_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_history`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_history` (
+  `customer_history_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_ip`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_ip` (
+  `customer_ip_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_login`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_login` (
+  `customer_login_id` int(11) NOT NULL,
+  `email` varchar(96) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `total` int(4) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_online`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_online` (
+  `ip` varchar(40) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `url` text NOT NULL,
+  `referer` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_reward`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_reward` (
+  `customer_reward_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL DEFAULT 0,
+  `order_id` int(11) NOT NULL DEFAULT 0,
+  `description` text NOT NULL,
+  `points` int(8) NOT NULL DEFAULT 0,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_search`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_search` (
+  `customer_search_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `sub_category` tinyint(1) NOT NULL,
+  `description` tinyint(1) NOT NULL,
+  `products` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_transaction`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_transaction` (
+  `customer_transaction_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}customer_wishlist`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}customer_wishlist` (
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}custom_field`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}custom_field` (
+  `custom_field_id` int(11) NOT NULL,
+  `type` varchar(32) NOT NULL,
+  `value` text NOT NULL,
+  `validation` varchar(255) NOT NULL,
+  `location` varchar(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}custom_field_customer_group`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}custom_field_customer_group` (
+  `custom_field_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `required` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}custom_field_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}custom_field_description` (
+  `custom_field_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}custom_field_value`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}custom_field_value` (
+  `custom_field_value_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}custom_field_value_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}custom_field_value_description` (
+  `custom_field_value_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}download`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}download` (
+  `download_id` int(11) NOT NULL,
+  `filename` varchar(160) NOT NULL,
+  `mask` varchar(128) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}download_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}download_description` (
+  `download_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}download_report`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}download_report` (
+  `download_report_id` int(11) NOT NULL,
+  `download_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}event`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}event` (
+  `event_id` int(11) NOT NULL,
+  `code` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `trigger` text NOT NULL,
+  `action` text NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `sort_order` int(3) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}extension`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}extension` (
+  `extension_id` int(11) NOT NULL,
+  `extension` varchar(255) NOT NULL,
+  `type` varchar(32) NOT NULL,
+  `code` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}extension_install`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}extension_install` (
+  `extension_install_id` int(11) NOT NULL,
+  `extension_id` int(11) NOT NULL,
+  `extension_download_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}extension_path`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}extension_path` (
+  `extension_path_id` int(11) NOT NULL,
+  `extension_install_id` int(11) NOT NULL,
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}filter`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}filter` (
+  `filter_id` int(11) NOT NULL,
+  `filter_group_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}filter_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}filter_description` (
+  `filter_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `filter_group_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}filter_group`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}filter_group` (
+  `filter_group_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}filter_group_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}filter_group_description` (
+  `filter_group_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}gdpr`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}gdpr` (
+  `gdpr_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `code` varchar(40) NOT NULL,
+  `email` varchar(96) NOT NULL,
+  `action` varchar(6) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}geo_zone`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}geo_zone` (
+  `geo_zone_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}information`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}information` (
+  `information_id` int(11) NOT NULL,
+  `bottom` int(1) NOT NULL DEFAULT 0,
+  `sort_order` int(3) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}information_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}information_description` (
+  `information_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `description` mediumtext NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}information_to_layout`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}information_to_layout` (
+  `information_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}information_to_store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}information_to_store` (
+  `information_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}language`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}language` (
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `code` varchar(5) NOT NULL,
+  `locale` varchar(255) NOT NULL,
+  `extension` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}layout`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}layout` (
+  `layout_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}layout_module`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}layout_module` (
+  `layout_module_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `position` varchar(14) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}layout_route`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}layout_route` (
+  `layout_route_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `route` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}length_class`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}length_class` (
+  `length_class_id` int(11) NOT NULL,
+  `value` decimal(15,8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}length_class_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}length_class_description` (
+  `length_class_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `unit` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}location`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}location` (
+  `location_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `address` text NOT NULL,
+  `telephone` varchar(32) NOT NULL,
+  `geocode` varchar(32) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `open` text NOT NULL,
+  `comment` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}manufacturer`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}manufacturer` (
+  `manufacturer_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}manufacturer_to_layout`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}manufacturer_to_layout` (
+  `manufacturer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}manufacturer_to_store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}manufacturer_to_store` (
+  `manufacturer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}marketing`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}marketing` (
+  `marketing_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `clicks` int(5) NOT NULL DEFAULT 0,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}marketing_report`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}marketing_report` (
+  `marketing_report_id` int(11) NOT NULL,
+  `marketing_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}module`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}module` (
+  `module_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `setting` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}notification`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}notification` (
+  `notification_id` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `text` text NOT NULL,
+  `status` tinyint(11) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}option`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}option` (
+  `option_id` int(11) NOT NULL,
+  `type` varchar(32) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}option_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}option_description` (
+  `option_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}option_value`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}option_value` (
+  `option_value_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}option_value_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}option_value_description` (
+  `option_value_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order` (
+  `order_id` int(11) NOT NULL,
+  `subscription_id` int(11) NOT NULL,
+  `invoice_no` int(11) NOT NULL DEFAULT 0,
+  `invoice_prefix` varchar(26) NOT NULL,
+  `transaction_id` varchar(100) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0,
+  `store_name` varchar(64) NOT NULL,
+  `store_url` varchar(255) NOT NULL,
+  `customer_id` int(11) NOT NULL DEFAULT 0,
+  `customer_group_id` int(11) NOT NULL DEFAULT 0,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(96) NOT NULL,
+  `telephone` varchar(32) NOT NULL,
+  `custom_field` text NOT NULL,
+  `payment_address_id` int(11) NOT NULL,
+  `payment_firstname` varchar(32) NOT NULL,
+  `payment_lastname` varchar(32) NOT NULL,
+  `payment_company` varchar(60) NOT NULL,
+  `payment_address_1` varchar(128) NOT NULL,
+  `payment_address_2` varchar(128) NOT NULL,
+  `payment_city` varchar(128) NOT NULL,
+  `payment_postcode` varchar(10) NOT NULL,
+  `payment_country` varchar(128) NOT NULL,
+  `payment_country_id` int(11) NOT NULL,
+  `payment_zone` varchar(128) NOT NULL,
+  `payment_zone_id` int(11) NOT NULL,
+  `payment_address_format` text NOT NULL,
+  `payment_custom_field` text NOT NULL,
+  `payment_method` text NOT NULL,
+  `shipping_address_id` int(11) NOT NULL,
+  `shipping_firstname` varchar(32) NOT NULL,
+  `shipping_lastname` varchar(32) NOT NULL,
+  `shipping_company` varchar(60) NOT NULL,
+  `shipping_address_1` varchar(128) NOT NULL,
+  `shipping_address_2` varchar(128) NOT NULL,
+  `shipping_city` varchar(128) NOT NULL,
+  `shipping_postcode` varchar(10) NOT NULL,
+  `shipping_country` varchar(128) NOT NULL,
+  `shipping_country_id` int(11) NOT NULL,
+  `shipping_zone` varchar(128) NOT NULL,
+  `shipping_zone_id` int(11) NOT NULL,
+  `shipping_address_format` text NOT NULL,
+  `shipping_custom_field` text NOT NULL,
+  `shipping_method` text NOT NULL,
+  `comment` text NOT NULL,
+  `total` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `order_status_id` int(11) NOT NULL DEFAULT 0,
+  `affiliate_id` int(11) NOT NULL,
+  `commission` decimal(15,4) NOT NULL,
+  `marketing_id` int(11) NOT NULL,
+  `tracking` varchar(64) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `language_code` varchar(5) NOT NULL,
+  `currency_id` int(11) NOT NULL,
+  `currency_code` varchar(3) NOT NULL,
+  `currency_value` decimal(15,8) NOT NULL DEFAULT 1.00000000,
+  `ip` varchar(40) NOT NULL,
+  `forwarded_ip` varchar(40) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `accept_language` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_history`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_history` (
+  `order_history_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `order_status_id` int(11) NOT NULL,
+  `notify` tinyint(1) NOT NULL DEFAULT 0,
+  `comment` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_option`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_option` (
+  `order_option_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `order_product_id` int(11) NOT NULL,
+  `product_option_id` int(11) NOT NULL,
+  `product_option_value_id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(255) NOT NULL,
+  `value` text NOT NULL,
+  `type` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_product`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_product` (
+  `order_product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `master_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `model` varchar(64) NOT NULL,
+  `quantity` int(4) NOT NULL,
+  `price` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `total` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `tax` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `reward` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_status`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_status` (
+  `order_status_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_subscription`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_subscription` (
+  `order_subscription_id` int(11) NOT NULL,
+  `order_product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `subscription_plan_id` int(11) NOT NULL,
+  `trial_price` decimal(10,4) NOT NULL,
+  `trial_tax` decimal(15,4) NOT NULL,
+  `trial_frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `trial_cycle` smallint(6) NOT NULL,
+  `trial_duration` smallint(6) NOT NULL,
+  `trial_remaining` smallint(6) NOT NULL,
+  `trial_status` tinyint(1) NOT NULL,
+  `price` decimal(10,4) NOT NULL,
+  `tax` decimal(15,4) NOT NULL,
+  `frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `cycle` smallint(6) NOT NULL,
+  `duration` smallint(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_total`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_total` (
+  `order_total_id` int(10) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `extension` varchar(255) NOT NULL,
+  `code` varchar(32) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `value` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}order_voucher`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}order_voucher` (
+  `order_voucher_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `voucher_id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `from_name` varchar(64) NOT NULL,
+  `from_email` varchar(96) NOT NULL,
+  `to_name` varchar(64) NOT NULL,
+  `to_email` varchar(96) NOT NULL,
+  `voucher_theme_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `amount` decimal(15,4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product` (
+  `product_id` int(11) NOT NULL,
+  `master_id` int(11) NOT NULL DEFAULT 0,
+  `model` varchar(64) NOT NULL,
+  `sku` varchar(64) NOT NULL,
+  `upc` varchar(12) NOT NULL,
+  `ean` varchar(14) NOT NULL,
+  `jan` varchar(13) NOT NULL,
+  `isbn` varchar(17) NOT NULL,
+  `mpn` varchar(64) NOT NULL,
+  `location` varchar(128) NOT NULL,
+  `variant` text NOT NULL DEFAULT '',
+  `override` text NOT NULL DEFAULT '',
+  `quantity` int(4) NOT NULL DEFAULT 0,
+  `stock_status_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `manufacturer_id` int(11) NOT NULL,
+  `shipping` tinyint(1) NOT NULL DEFAULT 1,
+  `price` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `points` int(8) NOT NULL DEFAULT 0,
+  `tax_class_id` int(11) NOT NULL,
+  `date_available` date NOT NULL,
+  `weight` decimal(15,8) NOT NULL DEFAULT 0.00000000,
+  `weight_class_id` int(11) NOT NULL DEFAULT 0,
+  `length` decimal(15,8) NOT NULL DEFAULT 0.00000000,
+  `width` decimal(15,8) NOT NULL DEFAULT 0.00000000,
+  `height` decimal(15,8) NOT NULL DEFAULT 0.00000000,
+  `length_class_id` int(11) NOT NULL DEFAULT 0,
+  `subtract` tinyint(1) NOT NULL DEFAULT 1,
+  `minimum` int(11) NOT NULL DEFAULT 1,
+  `rating` int(1) NOT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_attribute`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_attribute` (
+  `product_id` int(11) NOT NULL,
+  `attribute_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `text` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_description` (
+  `product_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `tag` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_discount`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_discount` (
+  `product_discount_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `quantity` int(4) NOT NULL DEFAULT 0,
+  `priority` int(5) NOT NULL DEFAULT 1,
+  `price` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_filter`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_filter` (
+  `product_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_image`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_image` (
+  `product_image_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_option`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_option` (
+  `product_option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `value` text NOT NULL,
+  `required` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_option_value`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_option_value` (
+  `product_option_value_id` int(11) NOT NULL,
+  `product_option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `option_value_id` int(11) NOT NULL,
+  `quantity` int(3) NOT NULL,
+  `subtract` tinyint(1) NOT NULL,
+  `price` decimal(15,4) NOT NULL,
+  `price_prefix` varchar(1) NOT NULL,
+  `points` int(8) NOT NULL,
+  `points_prefix` varchar(1) NOT NULL,
+  `weight` decimal(15,8) NOT NULL,
+  `weight_prefix` varchar(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_related`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_related` (
+  `product_id` int(11) NOT NULL,
+  `related_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_report`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_report` (
+  `product_report_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0,
+  `ip` varchar(40) NOT NULL,
+  `country` varchar(2) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_reward`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_reward` (
+  `product_reward_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL DEFAULT 0,
+  `customer_group_id` int(11) NOT NULL DEFAULT 0,
+  `points` int(8) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_special`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_special` (
+  `product_special_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `priority` int(5) NOT NULL DEFAULT 1,
+  `price` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_subscription`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_subscription` (
+  `product_id` int(11) NOT NULL,
+  `subscription_plan_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `trial_price` decimal(10,4) NOT NULL,
+  `price` decimal(10,4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_to_category`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_to_category` (
+  `product_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_to_download`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_to_download` (
+  `product_id` int(11) NOT NULL,
+  `download_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_to_layout`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_to_layout` (
+  `product_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_to_store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_to_store` (
+  `product_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}product_viewed`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}product_viewed` (
+  `product_id` int(11) NOT NULL,
+  `viewed` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}return`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}return` (
+  `return_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(96) NOT NULL,
+  `telephone` varchar(32) NOT NULL,
+  `product` varchar(255) NOT NULL,
+  `model` varchar(64) NOT NULL,
+  `quantity` int(4) NOT NULL,
+  `opened` tinyint(1) NOT NULL,
+  `return_reason_id` int(11) NOT NULL,
+  `return_action_id` int(11) NOT NULL,
+  `return_status_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `date_ordered` date NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}return_action`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}return_action` (
+  `return_action_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}return_history`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}return_history` (
+  `return_history_id` int(11) NOT NULL,
+  `return_id` int(11) NOT NULL,
+  `return_status_id` int(11) NOT NULL,
+  `notify` tinyint(1) NOT NULL,
+  `comment` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}return_reason`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}return_reason` (
+  `return_reason_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}return_status`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}return_status` (
+  `return_status_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}review`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}review` (
+  `review_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `author` varchar(64) NOT NULL,
+  `text` text NOT NULL,
+  `rating` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}seo_url`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}seo_url` (
+  `seo_url_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `key` varchar(64) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `keyword` varchar(768) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}session`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}session` (
+  `session_id` varchar(32) NOT NULL,
+  `data` text NOT NULL,
+  `expire` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}setting`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}setting` (
+  `setting_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0,
+  `code` varchar(128) NOT NULL,
+  `key` varchar(128) NOT NULL,
+  `value` text NOT NULL,
+  `serialized` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}startup`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}startup` (
+  `startup_id` int(11) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `action` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}statistics`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}statistics` (
+  `statistics_id` int(11) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `value` decimal(15,4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}stock_status`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}stock_status` (
+  `stock_status_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}store` (
+  `store_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `url` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}subscription`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}subscription` (
+  `subscription_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `order_product_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `payment_address_id` int(11) NOT NULL,
+  `payment_method` text NOT NULL,
+  `shipping_address_id` int(11) NOT NULL,
+  `shipping_method` text NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(4) NOT NULL,
+  `subscription_plan_id` int(11) NOT NULL,
+  `trial_price` decimal(10,4) NOT NULL,
+  `trial_frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `trial_cycle` smallint(6) NOT NULL,
+  `trial_duration` smallint(6) NOT NULL,
+  `trial_remaining` smallint(6) NOT NULL,
+  `trial_status` tinyint(1) NOT NULL,
+  `price` decimal(10,4) NOT NULL,
+  `frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `cycle` smallint(6) NOT NULL,
+  `duration` smallint(6) NOT NULL,
+  `remaining` smallint(6) NOT NULL,
+  `date_next` datetime NOT NULL,
+  `comment` text NOT NULL,
+  `subscription_status_id` int(11) NOT NULL,
+  `affiliate_id` int(11) NOT NULL,
+  `marketing_id` int(11) NOT NULL,
+  `tracking` varchar(64) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `currency_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `forwarded_ip` varchar(40) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `accept_language` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}subscription_history`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}subscription_history` (
+  `subscription_history_id` int(11) NOT NULL,
+  `subscription_id` int(11) NOT NULL,
+  `subscription_status_id` int(11) NOT NULL,
+  `notify` tinyint(1) NOT NULL DEFAULT 0,
+  `comment` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}subscription_plan`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}subscription_plan` (
+  `subscription_plan_id` int(11) NOT NULL,
+  `trial_frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `trial_duration` int(10) NOT NULL,
+  `trial_cycle` int(10) NOT NULL,
+  `trial_status` tinyint(4) NOT NULL,
+  `frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `duration` int(10) NOT NULL,
+  `cycle` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `sort_order` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}subscription_plan_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}subscription_plan_description` (
+  `subscription_plan_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}subscription_status`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}subscription_status` (
+  `subscription_status_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}tax_class`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}tax_class` (
+  `tax_class_id` int(11) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}tax_rate`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}tax_rate` (
+  `tax_rate_id` int(11) NOT NULL,
+  `geo_zone_id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(32) NOT NULL,
+  `rate` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `type` char(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}tax_rate_to_customer_group`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}tax_rate_to_customer_group` (
+  `tax_rate_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}tax_rule`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}tax_rule` (
+  `tax_rule_id` int(11) NOT NULL,
+  `tax_class_id` int(11) NOT NULL,
+  `tax_rate_id` int(11) NOT NULL,
+  `based` varchar(10) NOT NULL,
+  `priority` int(5) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}theme`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}theme` (
+  `theme_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `route` varchar(64) NOT NULL,
+  `code` mediumtext NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}topic`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}topic` (
+  `topic_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}topic_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}topic_description` (
+  `topic_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}topic_to_store`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}topic_to_store` (
+  `topic_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}translation`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}translation` (
+  `translation_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `route` varchar(64) NOT NULL,
+  `key` varchar(64) NOT NULL,
+  `value` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}upload`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}upload` (
+  `upload_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}user`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}user` (
+  `user_id` int(11) NOT NULL,
+  `user_group_id` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(96) NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT '',
+  `code` varchar(40) NOT NULL DEFAULT '',
+  `ip` varchar(40) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}user_authorize`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}user_authorize` (
+  `user_authorize_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(96) NOT NULL,
+  `total` int(1) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}user_group`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}user_group` (
+  `user_group_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `permission` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}user_login`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}user_login` (
+  `user_login_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}voucher`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}voucher` (
+  `voucher_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `from_name` varchar(64) NOT NULL,
+  `from_email` varchar(96) NOT NULL,
+  `to_name` varchar(64) NOT NULL,
+  `to_email` varchar(96) NOT NULL,
+  `voucher_theme_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}voucher_history`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}voucher_history` (
+  `voucher_history_id` int(11) NOT NULL,
+  `voucher_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}voucher_theme`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}voucher_theme` (
+  `voucher_theme_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}voucher_theme_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}voucher_theme_description` (
+  `voucher_theme_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}weight_class`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}weight_class` (
+  `weight_class_id` int(11) NOT NULL,
+  `value` decimal(15,8) NOT NULL DEFAULT 0.00000000
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}weight_class_description`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}weight_class_description` (
+  `weight_class_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `unit` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}zone`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}zone` (
+  `zone_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `code` varchar(32) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `{{ DB_PREFIX }}zone_to_geo_zone`
+--
+
+CREATE TABLE `{{ DB_PREFIX }}zone_to_geo_zone` (
+  `zone_to_geo_zone_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `zone_id` int(11) NOT NULL DEFAULT 0,
+  `geo_zone_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `{{ DB_PREFIX }}address`
+--
+ALTER TABLE `{{ DB_PREFIX }}address`
+  ADD PRIMARY KEY (`address_id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}address_format`
+--
+ALTER TABLE `{{ DB_PREFIX }}address_format`
+  ADD PRIMARY KEY (`address_format_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}antispam`
+--
+ALTER TABLE `{{ DB_PREFIX }}antispam`
+  ADD PRIMARY KEY (`antispam_id`),
+  ADD KEY `keyword` (`keyword`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}api`
+--
+ALTER TABLE `{{ DB_PREFIX }}api`
+  ADD PRIMARY KEY (`api_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}api_ip`
+--
+ALTER TABLE `{{ DB_PREFIX }}api_ip`
+  ADD PRIMARY KEY (`api_ip_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}api_session`
+--
+ALTER TABLE `{{ DB_PREFIX }}api_session`
+  ADD PRIMARY KEY (`api_session_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}article`
+--
+ALTER TABLE `{{ DB_PREFIX }}article`
+  ADD PRIMARY KEY (`article_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}article_comment`
+--
+ALTER TABLE `{{ DB_PREFIX }}article_comment`
+  ADD PRIMARY KEY (`article_comment_id`),
+  ADD KEY `article_id` (`article_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}article_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}article_description`
+  ADD PRIMARY KEY (`article_id`,`language_id`),
+  ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}article_to_layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}article_to_layout`
+  ADD PRIMARY KEY (`article_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}article_to_store`
+--
+ALTER TABLE `{{ DB_PREFIX }}article_to_store`
+  ADD PRIMARY KEY (`article_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}attribute`
+--
+ALTER TABLE `{{ DB_PREFIX }}attribute`
+  ADD PRIMARY KEY (`attribute_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}attribute_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}attribute_description`
+  ADD PRIMARY KEY (`attribute_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}attribute_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}attribute_group`
+  ADD PRIMARY KEY (`attribute_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}attribute_group_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}attribute_group_description`
+  ADD PRIMARY KEY (`attribute_group_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}banner`
+--
+ALTER TABLE `{{ DB_PREFIX }}banner`
+  ADD PRIMARY KEY (`banner_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}banner_image`
+--
+ALTER TABLE `{{ DB_PREFIX }}banner_image`
+  ADD PRIMARY KEY (`banner_image_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}cart`
+--
+ALTER TABLE `{{ DB_PREFIX }}cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `cart_id` (`api_id`,`customer_id`,`session_id`,`product_id`,`subscription_plan_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}category`
+--
+ALTER TABLE `{{ DB_PREFIX }}category`
+  ADD PRIMARY KEY (`category_id`),
+  ADD KEY `parent_id` (`parent_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}category_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}category_description`
+  ADD PRIMARY KEY (`category_id`,`language_id`),
+  ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}category_filter`
+--
+ALTER TABLE `{{ DB_PREFIX }}category_filter`
+  ADD PRIMARY KEY (`category_id`,`filter_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}category_path`
+--
+ALTER TABLE `{{ DB_PREFIX }}category_path`
+  ADD PRIMARY KEY (`category_id`,`path_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}category_to_layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}category_to_layout`
+  ADD PRIMARY KEY (`category_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}category_to_store`
+--
+ALTER TABLE `{{ DB_PREFIX }}category_to_store`
+  ADD PRIMARY KEY (`category_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}country`
+--
+ALTER TABLE `{{ DB_PREFIX }}country`
+  ADD PRIMARY KEY (`country_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}coupon`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon`
+  ADD PRIMARY KEY (`coupon_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}coupon_category`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon_category`
+  ADD PRIMARY KEY (`coupon_id`,`category_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}coupon_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon_history`
+  ADD PRIMARY KEY (`coupon_history_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}coupon_product`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon_product`
+  ADD PRIMARY KEY (`coupon_product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}cron`
+--
+ALTER TABLE `{{ DB_PREFIX }}cron`
+  ADD PRIMARY KEY (`cron_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}currency`
+--
+ALTER TABLE `{{ DB_PREFIX }}currency`
+  ADD PRIMARY KEY (`currency_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_activity`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_activity`
+  ADD PRIMARY KEY (`customer_activity_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_affiliate`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_affiliate`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_affiliate_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_affiliate_report`
+  ADD PRIMARY KEY (`customer_affiliate_report_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_approval`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_approval`
+  ADD PRIMARY KEY (`customer_approval_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_group`
+  ADD PRIMARY KEY (`customer_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_group_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_group_description`
+  ADD PRIMARY KEY (`customer_group_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_history`
+  ADD PRIMARY KEY (`customer_history_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_ip`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_ip`
+  ADD PRIMARY KEY (`customer_ip_id`),
+  ADD KEY `ip` (`ip`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_login`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_login`
+  ADD PRIMARY KEY (`customer_login_id`),
+  ADD KEY `email` (`email`),
+  ADD KEY `ip` (`ip`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_online`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_online`
+  ADD PRIMARY KEY (`ip`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_reward`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_reward`
+  ADD PRIMARY KEY (`customer_reward_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_search`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_search`
+  ADD PRIMARY KEY (`customer_search_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_transaction`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_transaction`
+  ADD PRIMARY KEY (`customer_transaction_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}customer_wishlist`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_wishlist`
+  ADD PRIMARY KEY (`customer_id`,`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}custom_field`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field`
+  ADD PRIMARY KEY (`custom_field_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}custom_field_customer_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field_customer_group`
+  ADD PRIMARY KEY (`custom_field_id`,`customer_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}custom_field_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field_description`
+  ADD PRIMARY KEY (`custom_field_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}custom_field_value`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field_value`
+  ADD PRIMARY KEY (`custom_field_value_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}custom_field_value_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field_value_description`
+  ADD PRIMARY KEY (`custom_field_value_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}download`
+--
+ALTER TABLE `{{ DB_PREFIX }}download`
+  ADD PRIMARY KEY (`download_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}download_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}download_description`
+  ADD PRIMARY KEY (`download_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}download_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}download_report`
+  ADD PRIMARY KEY (`download_report_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}event`
+--
+ALTER TABLE `{{ DB_PREFIX }}event`
+  ADD PRIMARY KEY (`event_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}extension`
+--
+ALTER TABLE `{{ DB_PREFIX }}extension`
+  ADD PRIMARY KEY (`extension_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}extension_install`
+--
+ALTER TABLE `{{ DB_PREFIX }}extension_install`
+  ADD PRIMARY KEY (`extension_install_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}extension_path`
+--
+ALTER TABLE `{{ DB_PREFIX }}extension_path`
+  ADD PRIMARY KEY (`extension_path_id`),
+  ADD KEY `path` (`path`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}filter`
+--
+ALTER TABLE `{{ DB_PREFIX }}filter`
+  ADD PRIMARY KEY (`filter_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}filter_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}filter_description`
+  ADD PRIMARY KEY (`filter_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}filter_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}filter_group`
+  ADD PRIMARY KEY (`filter_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}filter_group_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}filter_group_description`
+  ADD PRIMARY KEY (`filter_group_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}gdpr`
+--
+ALTER TABLE `{{ DB_PREFIX }}gdpr`
+  ADD PRIMARY KEY (`gdpr_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}geo_zone`
+--
+ALTER TABLE `{{ DB_PREFIX }}geo_zone`
+  ADD PRIMARY KEY (`geo_zone_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}information`
+--
+ALTER TABLE `{{ DB_PREFIX }}information`
+  ADD PRIMARY KEY (`information_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}information_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}information_description`
+  ADD PRIMARY KEY (`information_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}information_to_layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}information_to_layout`
+  ADD PRIMARY KEY (`information_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}information_to_store`
+--
+ALTER TABLE `{{ DB_PREFIX }}information_to_store`
+  ADD PRIMARY KEY (`information_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}language`
+--
+ALTER TABLE `{{ DB_PREFIX }}language`
+  ADD PRIMARY KEY (`language_id`),
+  ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}layout`
+  ADD PRIMARY KEY (`layout_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}layout_module`
+--
+ALTER TABLE `{{ DB_PREFIX }}layout_module`
+  ADD PRIMARY KEY (`layout_module_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}layout_route`
+--
+ALTER TABLE `{{ DB_PREFIX }}layout_route`
+  ADD PRIMARY KEY (`layout_route_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}length_class`
+--
+ALTER TABLE `{{ DB_PREFIX }}length_class`
+  ADD PRIMARY KEY (`length_class_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}length_class_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}length_class_description`
+  ADD PRIMARY KEY (`length_class_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}location`
+--
+ALTER TABLE `{{ DB_PREFIX }}location`
+  ADD PRIMARY KEY (`location_id`),
+  ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}manufacturer`
+--
+ALTER TABLE `{{ DB_PREFIX }}manufacturer`
+  ADD PRIMARY KEY (`manufacturer_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}manufacturer_to_layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}manufacturer_to_layout`
+  ADD PRIMARY KEY (`manufacturer_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}manufacturer_to_store`
+--
+ALTER TABLE `{{ DB_PREFIX }}manufacturer_to_store`
+  ADD PRIMARY KEY (`manufacturer_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}marketing`
+--
+ALTER TABLE `{{ DB_PREFIX }}marketing`
+  ADD PRIMARY KEY (`marketing_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}marketing_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}marketing_report`
+  ADD PRIMARY KEY (`marketing_report_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}module`
+--
+ALTER TABLE `{{ DB_PREFIX }}module`
+  ADD PRIMARY KEY (`module_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}notification`
+--
+ALTER TABLE `{{ DB_PREFIX }}notification`
+  ADD PRIMARY KEY (`notification_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}option`
+--
+ALTER TABLE `{{ DB_PREFIX }}option`
+  ADD PRIMARY KEY (`option_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}option_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}option_description`
+  ADD PRIMARY KEY (`option_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}option_value`
+--
+ALTER TABLE `{{ DB_PREFIX }}option_value`
+  ADD PRIMARY KEY (`option_value_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}option_value_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}option_value_description`
+  ADD PRIMARY KEY (`option_value_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order`
+--
+ALTER TABLE `{{ DB_PREFIX }}order`
+  ADD PRIMARY KEY (`order_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_history`
+  ADD PRIMARY KEY (`order_history_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_option`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_option`
+  ADD PRIMARY KEY (`order_option_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_product`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_product`
+  ADD PRIMARY KEY (`order_product_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_status`
+  ADD PRIMARY KEY (`order_status_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_subscription`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_subscription`
+  ADD PRIMARY KEY (`order_subscription_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_total`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_total`
+  ADD PRIMARY KEY (`order_total_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}order_voucher`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_voucher`
+  ADD PRIMARY KEY (`order_voucher_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product`
+--
+ALTER TABLE `{{ DB_PREFIX }}product`
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_attribute`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_attribute`
+  ADD PRIMARY KEY (`product_id`,`attribute_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_description`
+  ADD PRIMARY KEY (`product_id`,`language_id`),
+  ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_discount`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_discount`
+  ADD PRIMARY KEY (`product_discount_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_filter`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_filter`
+  ADD PRIMARY KEY (`product_id`,`filter_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_image`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_image`
+  ADD PRIMARY KEY (`product_image_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_option`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_option`
+  ADD PRIMARY KEY (`product_option_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_option_value`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_option_value`
+  ADD PRIMARY KEY (`product_option_value_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_related`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_related`
+  ADD PRIMARY KEY (`product_id`,`related_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_report`
+  ADD PRIMARY KEY (`product_report_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_reward`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_reward`
+  ADD PRIMARY KEY (`product_reward_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_special`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_special`
+  ADD PRIMARY KEY (`product_special_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_subscription`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_subscription`
+  ADD PRIMARY KEY (`product_id`,`subscription_plan_id`,`customer_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_to_category`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_to_category`
+  ADD PRIMARY KEY (`product_id`,`category_id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_to_download`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_to_download`
+  ADD PRIMARY KEY (`product_id`,`download_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_to_layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_to_layout`
+  ADD PRIMARY KEY (`product_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_to_store`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_to_store`
+  ADD PRIMARY KEY (`product_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}product_viewed`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_viewed`
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}return`
+--
+ALTER TABLE `{{ DB_PREFIX }}return`
+  ADD PRIMARY KEY (`return_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}return_action`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_action`
+  ADD PRIMARY KEY (`return_action_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}return_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_history`
+  ADD PRIMARY KEY (`return_history_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}return_reason`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_reason`
+  ADD PRIMARY KEY (`return_reason_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}return_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_status`
+  ADD PRIMARY KEY (`return_status_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}review`
+--
+ALTER TABLE `{{ DB_PREFIX }}review`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}seo_url`
+--
+ALTER TABLE `{{ DB_PREFIX }}seo_url`
+  ADD PRIMARY KEY (`seo_url_id`),
+  ADD KEY `keyword` (`keyword`),
+  ADD KEY `query` (`key`,`value`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}session`
+--
+ALTER TABLE `{{ DB_PREFIX }}session`
+  ADD PRIMARY KEY (`session_id`),
+  ADD KEY `expire` (`expire`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}setting`
+--
+ALTER TABLE `{{ DB_PREFIX }}setting`
+  ADD PRIMARY KEY (`setting_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}startup`
+--
+ALTER TABLE `{{ DB_PREFIX }}startup`
+  ADD PRIMARY KEY (`startup_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}statistics`
+--
+ALTER TABLE `{{ DB_PREFIX }}statistics`
+  ADD PRIMARY KEY (`statistics_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}stock_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}stock_status`
+  ADD PRIMARY KEY (`stock_status_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}store`
+--
+ALTER TABLE `{{ DB_PREFIX }}store`
+  ADD PRIMARY KEY (`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}subscription`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription`
+  ADD PRIMARY KEY (`subscription_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}subscription_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_history`
+  ADD PRIMARY KEY (`subscription_history_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}subscription_plan`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_plan`
+  ADD PRIMARY KEY (`subscription_plan_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}subscription_plan_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_plan_description`
+  ADD PRIMARY KEY (`subscription_plan_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}subscription_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_status`
+  ADD PRIMARY KEY (`subscription_status_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}tax_class`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_class`
+  ADD PRIMARY KEY (`tax_class_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}tax_rate`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_rate`
+  ADD PRIMARY KEY (`tax_rate_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}tax_rate_to_customer_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_rate_to_customer_group`
+  ADD PRIMARY KEY (`tax_rate_id`,`customer_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}tax_rule`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_rule`
+  ADD PRIMARY KEY (`tax_rule_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}theme`
+--
+ALTER TABLE `{{ DB_PREFIX }}theme`
+  ADD PRIMARY KEY (`theme_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}topic`
+--
+ALTER TABLE `{{ DB_PREFIX }}topic`
+  ADD PRIMARY KEY (`topic_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}topic_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}topic_description`
+  ADD PRIMARY KEY (`topic_id`,`language_id`),
+  ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}topic_to_store`
+--
+ALTER TABLE `{{ DB_PREFIX }}topic_to_store`
+  ADD PRIMARY KEY (`topic_id`,`store_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}translation`
+--
+ALTER TABLE `{{ DB_PREFIX }}translation`
+  ADD PRIMARY KEY (`translation_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}upload`
+--
+ALTER TABLE `{{ DB_PREFIX }}upload`
+  ADD PRIMARY KEY (`upload_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}user`
+--
+ALTER TABLE `{{ DB_PREFIX }}user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}user_authorize`
+--
+ALTER TABLE `{{ DB_PREFIX }}user_authorize`
+  ADD PRIMARY KEY (`user_authorize_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}user_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}user_group`
+  ADD PRIMARY KEY (`user_group_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}user_login`
+--
+ALTER TABLE `{{ DB_PREFIX }}user_login`
+  ADD PRIMARY KEY (`user_login_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}voucher`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher`
+  ADD PRIMARY KEY (`voucher_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}voucher_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher_history`
+  ADD PRIMARY KEY (`voucher_history_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}voucher_theme`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher_theme`
+  ADD PRIMARY KEY (`voucher_theme_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}voucher_theme_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher_theme_description`
+  ADD PRIMARY KEY (`voucher_theme_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}weight_class`
+--
+ALTER TABLE `{{ DB_PREFIX }}weight_class`
+  ADD PRIMARY KEY (`weight_class_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}weight_class_description`
+--
+ALTER TABLE `{{ DB_PREFIX }}weight_class_description`
+  ADD PRIMARY KEY (`weight_class_id`,`language_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}zone`
+--
+ALTER TABLE `{{ DB_PREFIX }}zone`
+  ADD PRIMARY KEY (`zone_id`);
+
+--
+-- Indexes for table `{{ DB_PREFIX }}zone_to_geo_zone`
+--
+ALTER TABLE `{{ DB_PREFIX }}zone_to_geo_zone`
+  ADD PRIMARY KEY (`zone_to_geo_zone_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}address`
+--
+ALTER TABLE `{{ DB_PREFIX }}address`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}address_format`
+--
+ALTER TABLE `{{ DB_PREFIX }}address_format`
+  MODIFY `address_format_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}antispam`
+--
+ALTER TABLE `{{ DB_PREFIX }}antispam`
+  MODIFY `antispam_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}api`
+--
+ALTER TABLE `{{ DB_PREFIX }}api`
+  MODIFY `api_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}api_ip`
+--
+ALTER TABLE `{{ DB_PREFIX }}api_ip`
+  MODIFY `api_ip_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}api_session`
+--
+ALTER TABLE `{{ DB_PREFIX }}api_session`
+  MODIFY `api_session_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}article`
+--
+ALTER TABLE `{{ DB_PREFIX }}article`
+  MODIFY `article_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}article_comment`
+--
+ALTER TABLE `{{ DB_PREFIX }}article_comment`
+  MODIFY `article_comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}attribute`
+--
+ALTER TABLE `{{ DB_PREFIX }}attribute`
+  MODIFY `attribute_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}attribute_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}attribute_group`
+  MODIFY `attribute_group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}banner`
+--
+ALTER TABLE `{{ DB_PREFIX }}banner`
+  MODIFY `banner_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}banner_image`
+--
+ALTER TABLE `{{ DB_PREFIX }}banner_image`
+  MODIFY `banner_image_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}cart`
+--
+ALTER TABLE `{{ DB_PREFIX }}cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}category`
+--
+ALTER TABLE `{{ DB_PREFIX }}category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}country`
+--
+ALTER TABLE `{{ DB_PREFIX }}country`
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}coupon`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon`
+  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}coupon_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon_history`
+  MODIFY `coupon_history_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}coupon_product`
+--
+ALTER TABLE `{{ DB_PREFIX }}coupon_product`
+  MODIFY `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}cron`
+--
+ALTER TABLE `{{ DB_PREFIX }}cron`
+  MODIFY `cron_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}currency`
+--
+ALTER TABLE `{{ DB_PREFIX }}currency`
+  MODIFY `currency_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer`
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_activity`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_activity`
+  MODIFY `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_affiliate_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_affiliate_report`
+  MODIFY `customer_affiliate_report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_approval`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_approval`
+  MODIFY `customer_approval_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_group`
+  MODIFY `customer_group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_history`
+  MODIFY `customer_history_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_ip`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_ip`
+  MODIFY `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_login`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_login`
+  MODIFY `customer_login_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_reward`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_reward`
+  MODIFY `customer_reward_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_search`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_search`
+  MODIFY `customer_search_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}customer_transaction`
+--
+ALTER TABLE `{{ DB_PREFIX }}customer_transaction`
+  MODIFY `customer_transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}custom_field`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field`
+  MODIFY `custom_field_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}custom_field_value`
+--
+ALTER TABLE `{{ DB_PREFIX }}custom_field_value`
+  MODIFY `custom_field_value_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}download`
+--
+ALTER TABLE `{{ DB_PREFIX }}download`
+  MODIFY `download_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}download_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}download_report`
+  MODIFY `download_report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}event`
+--
+ALTER TABLE `{{ DB_PREFIX }}event`
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}extension`
+--
+ALTER TABLE `{{ DB_PREFIX }}extension`
+  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}extension_install`
+--
+ALTER TABLE `{{ DB_PREFIX }}extension_install`
+  MODIFY `extension_install_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}extension_path`
+--
+ALTER TABLE `{{ DB_PREFIX }}extension_path`
+  MODIFY `extension_path_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}filter`
+--
+ALTER TABLE `{{ DB_PREFIX }}filter`
+  MODIFY `filter_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}filter_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}filter_group`
+  MODIFY `filter_group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}gdpr`
+--
+ALTER TABLE `{{ DB_PREFIX }}gdpr`
+  MODIFY `gdpr_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}geo_zone`
+--
+ALTER TABLE `{{ DB_PREFIX }}geo_zone`
+  MODIFY `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}information`
+--
+ALTER TABLE `{{ DB_PREFIX }}information`
+  MODIFY `information_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}language`
+--
+ALTER TABLE `{{ DB_PREFIX }}language`
+  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}layout`
+--
+ALTER TABLE `{{ DB_PREFIX }}layout`
+  MODIFY `layout_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}layout_module`
+--
+ALTER TABLE `{{ DB_PREFIX }}layout_module`
+  MODIFY `layout_module_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}layout_route`
+--
+ALTER TABLE `{{ DB_PREFIX }}layout_route`
+  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}length_class`
+--
+ALTER TABLE `{{ DB_PREFIX }}length_class`
+  MODIFY `length_class_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}location`
+--
+ALTER TABLE `{{ DB_PREFIX }}location`
+  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}manufacturer`
+--
+ALTER TABLE `{{ DB_PREFIX }}manufacturer`
+  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}marketing`
+--
+ALTER TABLE `{{ DB_PREFIX }}marketing`
+  MODIFY `marketing_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}marketing_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}marketing_report`
+  MODIFY `marketing_report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}module`
+--
+ALTER TABLE `{{ DB_PREFIX }}module`
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}notification`
+--
+ALTER TABLE `{{ DB_PREFIX }}notification`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}option`
+--
+ALTER TABLE `{{ DB_PREFIX }}option`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}option_value`
+--
+ALTER TABLE `{{ DB_PREFIX }}option_value`
+  MODIFY `option_value_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order`
+--
+ALTER TABLE `{{ DB_PREFIX }}order`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_history`
+  MODIFY `order_history_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_option`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_option`
+  MODIFY `order_option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_product`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_product`
+  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_status`
+  MODIFY `order_status_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_subscription`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_subscription`
+  MODIFY `order_subscription_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_total`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_total`
+  MODIFY `order_total_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}order_voucher`
+--
+ALTER TABLE `{{ DB_PREFIX }}order_voucher`
+  MODIFY `order_voucher_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product`
+--
+ALTER TABLE `{{ DB_PREFIX }}product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_discount`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_discount`
+  MODIFY `product_discount_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_image`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_image`
+  MODIFY `product_image_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_option`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_option`
+  MODIFY `product_option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_option_value`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_option_value`
+  MODIFY `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_report`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_report`
+  MODIFY `product_report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_reward`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_reward`
+  MODIFY `product_reward_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}product_special`
+--
+ALTER TABLE `{{ DB_PREFIX }}product_special`
+  MODIFY `product_special_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}return`
+--
+ALTER TABLE `{{ DB_PREFIX }}return`
+  MODIFY `return_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}return_action`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_action`
+  MODIFY `return_action_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}return_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_history`
+  MODIFY `return_history_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}return_reason`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_reason`
+  MODIFY `return_reason_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}return_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}return_status`
+  MODIFY `return_status_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}review`
+--
+ALTER TABLE `{{ DB_PREFIX }}review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}seo_url`
+--
+ALTER TABLE `{{ DB_PREFIX }}seo_url`
+  MODIFY `seo_url_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}setting`
+--
+ALTER TABLE `{{ DB_PREFIX }}setting`
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}startup`
+--
+ALTER TABLE `{{ DB_PREFIX }}startup`
+  MODIFY `startup_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}statistics`
+--
+ALTER TABLE `{{ DB_PREFIX }}statistics`
+  MODIFY `statistics_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}stock_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}stock_status`
+  MODIFY `stock_status_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}store`
+--
+ALTER TABLE `{{ DB_PREFIX }}store`
+  MODIFY `store_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}subscription`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription`
+  MODIFY `subscription_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}subscription_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_history`
+  MODIFY `subscription_history_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}subscription_plan`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_plan`
+  MODIFY `subscription_plan_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}subscription_status`
+--
+ALTER TABLE `{{ DB_PREFIX }}subscription_status`
+  MODIFY `subscription_status_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}tax_class`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_class`
+  MODIFY `tax_class_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}tax_rate`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_rate`
+  MODIFY `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}tax_rule`
+--
+ALTER TABLE `{{ DB_PREFIX }}tax_rule`
+  MODIFY `tax_rule_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}theme`
+--
+ALTER TABLE `{{ DB_PREFIX }}theme`
+  MODIFY `theme_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}topic`
+--
+ALTER TABLE `{{ DB_PREFIX }}topic`
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}translation`
+--
+ALTER TABLE `{{ DB_PREFIX }}translation`
+  MODIFY `translation_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}upload`
+--
+ALTER TABLE `{{ DB_PREFIX }}upload`
+  MODIFY `upload_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}user`
+--
+ALTER TABLE `{{ DB_PREFIX }}user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}user_authorize`
+--
+ALTER TABLE `{{ DB_PREFIX }}user_authorize`
+  MODIFY `user_authorize_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}user_group`
+--
+ALTER TABLE `{{ DB_PREFIX }}user_group`
+  MODIFY `user_group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}user_login`
+--
+ALTER TABLE `{{ DB_PREFIX }}user_login`
+  MODIFY `user_login_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}voucher`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher`
+  MODIFY `voucher_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}voucher_history`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher_history`
+  MODIFY `voucher_history_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}voucher_theme`
+--
+ALTER TABLE `{{ DB_PREFIX }}voucher_theme`
+  MODIFY `voucher_theme_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}weight_class`
+--
+ALTER TABLE `{{ DB_PREFIX }}weight_class`
+  MODIFY `weight_class_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}zone`
+--
+ALTER TABLE `{{ DB_PREFIX }}zone`
+  MODIFY `zone_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `{{ DB_PREFIX }}zone_to_geo_zone`
+--
+ALTER TABLE `{{ DB_PREFIX }}zone_to_geo_zone`
+  MODIFY `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

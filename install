@@ -1,0 +1,128 @@
+#!/usr/bin/env php
+<?php
+
+require_once(__DIR__ . '/bootstrap.php');
+
+new class {
+
+    private string $resetColor = "\033[0m";
+    
+    private \PDO $pdo;
+
+    public function __construct()
+    {
+        try {
+            $this->pdo = $this->getConnection();
+            $this->createDatabaseStructure();
+            $this->loadDatabaseData();
+        } catch(Exception $e) {
+            $this->printlnError($e->getMessage());
+        }
+    }
+
+    protected function getConnection(): \PDO
+    {
+        $dsn = sprintf(
+            'mysql:host=%s;dbname=%s;port=%d;charset=%s',
+            DB_HOSTNAME,
+            DB_DATABASE,
+            DB_PORT,
+            'utf8mb4'
+        );
+
+        $options = [
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES => false,
+        ];
+
+        return new \PDO($dsn, DB_USERNAME, DB_PASSWORD, $options);
+    }
+
+    protected function createDatabaseStructure(): void
+    {
+        $sql = sprintf(
+            "SELECT COUNT(*) as total FROM information_schema.tables WHERE table_schema = '%s'",
+            DB_DATABASE
+        );
+
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetch();
+
+        // Create table structure if not present
+        if (empty($result['total'])) {
+            $this->printlnWarning('Creating database schema');
+
+            $status = $this->pdo->exec($this->getSQLStatement('structure'));
+
+            if ($status !== false) {
+                $this->printlnSuccess('Database schema created successfully.');
+            } else {
+                $this->printlnError('Failed to create database schema');
+            }
+
+            return;
+        }
+
+        $this->printlnWarning("Database schema is already loaded.");
+    }
+
+    protected function loadDatabaseData(): void
+    {
+        $sql = sprintf("SELECT COUNT(*) FROM %s%s", DB_PREFIX, 'user');
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetchColumn();
+        
+        if ($result == 0) {
+            $this->printlnWarning('Creating temporary table data');
+
+            $status = $this->pdo->exec($this->getSQLStatement('data'));
+
+            if ($status !== false) {
+                $this->printlnSuccess('Table data loaded successfully.');
+            } else {
+                $this->printlnError('Failed to load table data');
+            }
+
+            return;
+        }
+
+        $this->printlnWarning("Table data is already loaded.");
+    }
+
+    private function getSQLStatement(string $filename): string
+    {
+        $filepath = __DIR__ . sprintf('/sql/%s', $filename);
+        $sqlFilepath = $filepath . '.sql';
+        
+        if (!file_exists($filepath)) {
+            throw new Exception(sprintf('File not found: "%s"', $filepath));
+        }
+
+        $syntax = str_replace('{{ DB_PREFIX }}', DB_PREFIX, file_get_contents($filepath));
+
+        file_put_contents($sqlFilepath, $syntax);
+
+        return $syntax;
+    }
+
+    private function println(string $message): void
+    {
+        echo $message . "\n";
+    }
+
+    private function printlnError(string $message) 
+    {
+        echo "\033[31m" . $message . $this->resetColor . "\n";
+    }
+    
+    private function printlnWarning(string $message) 
+    {
+        echo "\033[33m" . $message . $this->resetColor . "\n";
+    }
+    
+    private function printlnSuccess(string $message) 
+    {
+        echo "\033[32m" . $message . $this->resetColor . "\n";
+    }
+};

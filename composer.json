@@ -1,0 +1,15 @@
+{
+    "name": "ucscode/pippahairs",
+    "description": "A peculiar version of opencart software",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ucscode",
+            "email": "uche23mail@gmail.com"
+        }
+    ]
+}

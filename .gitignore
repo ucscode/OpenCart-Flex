@@ -1,0 +1,50 @@
+# Ignore Composer lock file and dependencies
+/vendor/
+/composer.lock
+
+# Ignore Node dependencies (if applicable)
+node_modules/
+npm-debug.log
+yarn.lock
+
+# Ignore environment files
+/.env
+/.env.local
+
+# Ignore IDE specific files and folders
+.vscode/
+.idea/
+.DS_Store
+
+# Ignore PHPUnit and other test related files
+phpunit.xml
+phpunit.xml.dist
+tests/
+coverage/
+
+# Ignore any other temporary or unnecessary files
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# Ignore compiled and temporary files
+*.log
+*.tmp
+*.swp
+*.temp
+
+# Ignore everything in the storage directories
+/public/system/storage/*/*
+/public/**/image/cache/*
+/sql/*.sql
+
+# But keep index.html files in these directories
+!/public/**/*.html
+!/public/system/storage/marketplace/*.zip
+
+# Ignore third-party extensions and temporary files
+admin/view/template/*.tpl
+catalog/view/template/*.tpl
+catalog/controller/extension/*.php
+admin/controller/extension/*.php
+
