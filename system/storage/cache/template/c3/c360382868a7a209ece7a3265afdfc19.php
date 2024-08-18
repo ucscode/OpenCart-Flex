@@ -74,6 +74,6 @@ class __TwigTemplate_b222c0654cb323afda03c1d92c220026 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "install/view/template/common/footer.twig", "/opt/lampp/htdocs/projects/pippahairs/upload/install/view/template/common/footer.twig");
+        return new Source("", "install/view/template/common/footer.twig", "/home/ucscatvn/pippahairs.com/install/view/template/common/footer.twig");
     }
 }

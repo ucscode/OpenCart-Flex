@@ -94,6 +94,6 @@ class __TwigTemplate_63f3ab56a9a0f3aa8c8c460bef6d5a99 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "install/view/template/install/step_1.twig", "/opt/lampp/htdocs/projects/pippahairs/upload/install/view/template/install/step_1.twig");
+        return new Source("", "install/view/template/install/step_1.twig", "/home/ucscatvn/pippahairs.com/install/view/template/install/step_1.twig");
     }
 }

@@ -80,6 +80,6 @@ class __TwigTemplate_bf0ce3edc520c08e10cefa4e29924a8b extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "install/view/template/common/header.twig", "/opt/lampp/htdocs/projects/pippahairs/upload/install/view/template/common/header.twig");
+        return new Source("", "install/view/template/common/header.twig", "/home/ucscatvn/pippahairs.com/install/view/template/common/header.twig");
     }
 }
