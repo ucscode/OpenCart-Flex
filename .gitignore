@@ -1,1 +1,7 @@
 .config.php
+
+# Ignore everything in cache
+cache/
+
+# Do no ignore index.html in the project
+!**/index.html
