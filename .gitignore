@@ -1,4 +1,5 @@
-.config.php
+/config.php
+/admin/config.php
 
 # Ignore everything in cache
 cache/
