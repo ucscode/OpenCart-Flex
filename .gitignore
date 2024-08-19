@@ -34,13 +34,14 @@ Thumbs.db
 *.temp
 
 # Ignore everything in the storage directories
-/public/system/storage/*/*
+/storage/*/*
 /public/**/image/cache/*
 /sql/*.sql
 
 # But keep index.html files in these directories
-!/public/**/*.html
-!/public/system/storage/marketplace/*.zip
+!/**/*.html
+!/storage/marketplace/*.zip
+!/storage/vendor/*
 
 # Ignore third-party extensions and temporary files
 admin/view/template/*.tpl

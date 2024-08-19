@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+require_once dirname(__DIR__) . '/kits/bootstrap.php';
+
+use Opencart\Kits\Command\InstallCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+
+(new SingleCommandApplication())
+    ->setCode(function(InputInterface $input, OutputInterface $output): int {
+        return (new InstallCommand())->execute($input, $output);
+    })
+    ->run()
+;

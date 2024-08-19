@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__) . '/bootstrap.php';
+require_once dirname(__DIR__) . '/kits/bootstrap.php';
 
 // APPLICATION
 define('APPLICATION', 'Catalog');

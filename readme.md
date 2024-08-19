@@ -1,7 +1,3 @@
-Here’s an improved and more detailed version of your `README.md` file:
-
----
-
 # Installation Guide
 
 Welcome to the installation guide for this forked version of OpenCart 4.  
@@ -25,7 +21,15 @@ Follow these steps to set up and configure your installation:
    - Configure the file with the correct database credentials and other environment-specific settings. 
    - Ensure that all required environment variables are set according to your setup.
 
-## Step 2. **Create the Database Schema**
+## Step 2. **Install Dependencies**
+
+1. **Run Composer Command**:
+
+   ```bash
+   composer install
+   ```
+
+## Step 3. **Create the Database Schema**
 
 1. **Run the Installation Command**:
    
@@ -33,12 +37,12 @@ Follow these steps to set up and configure your installation:
    - This script will create the necessary database tables and initial configuration.
 
      ```bash
-     ./install
+     ./bin/install
      ```
 
    - Ensure that you have the necessary permissions to run the script and that your environment is correctly configured.
 
-## Step 3. **Access Your Site**
+## Step 4. **Access Your Site**
 
 1. **Visit the Frontend**:
 
@@ -49,7 +53,7 @@ Follow these steps to set up and configure your installation:
      ```
    - You should see your site’s homepage and be able to explore its features.
 
-## 4. **Access the Admin Panel**
+## Step 5. **Access the Admin Panel**
 
 1. **Visit the Admin Interface**:
 
